@@ -9,7 +9,7 @@ using RpgAPI.Models.Enuns;
 namespace RpgAPI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[Controller]")]
     public class PersonagensExemploController : ControllerBase
     {
         private static List<Personagem> personagens = new List<Personagem>()
@@ -23,11 +23,60 @@ namespace RpgAPI.Controllers
             new Personagem() { Id = 6, Nome = "Celeborn", PontosVida=100, Forca=21, Defesa=13, Inteligencia=34, Classe=ClasseEnum.Clerigo },
             new Personagem() { Id = 7, Nome = "Radagast", PontosVida=100, Forca=25, Defesa=11, Inteligencia=35, Classe=ClasseEnum.Mago }
         };
+           
+           [HttpGet("Get")]
             public IActionResult GetFirst()
             {
                 Personagem  p = personagens[0];
                 return Ok(p);
 
             }
+
+            [HttpGet("GetAll")]
+            public IActionResult Get()
+            {
+                return Ok(personagens);
+            }
+
+            [HttpGet("{id}")]
+            public IActionResult GetSingle(int id)
+            {
+                return Ok(personagens.FirstOrDefault(pe => pe.Id == id));
+            }
+
+            [HttpPost]
+
+            public IActionResult AddPersonagem(Personagem novoPersonagem)
+            {
+                personagens.Add(novoPersonagem);
+                return Ok(personagens);
+
+            }
+
+            [HttpGet("GetOrdenado")]
+            public IActionResult GetOrder()
+            {
+                List<Personagem> listaFinal = personagens.OrderBy(p => p.Forca).ToList();
+                return Ok(listaFinal);
+            }
+
+            [HttpGet("GetContagem")]
+
+            public IActionResult GetCount()
+            {
+                return Ok("Quantidade de Personagens:" + personagens.Count);
+            }
+
+            [HttpGet("GetSumForca")]
+
+            public IActionResult GetSumForca()
+            {
+                return Ok(personagens.Sum(p => p.Forca));
+
+            }
+
+            
+
         }
+
 }
