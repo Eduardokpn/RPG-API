@@ -48,6 +48,9 @@ namespace RpgAPI.Controllers
 
             public IActionResult AddPersonagem(Personagem novoPersonagem)
             {
+                if(novoPersonagem.Inteligencia == 0)
+                return BadRequest("Inteligencia não pode ser 0");
+                
                 personagens.Add(novoPersonagem);
                 return Ok(personagens);
 
@@ -74,6 +77,17 @@ namespace RpgAPI.Controllers
                 return Ok(personagens.Sum(p => p.Forca));
 
             }
+
+
+            [HttpGet("GetRemove")]
+            public IActionResult GetRemoveMagos()
+            {
+                Personagem pRemove = personagens.Find(p => p.Classe == ClasseEnum.Mago);
+                personagens.Remove(pRemove);
+                return Ok("Personagem Removido" + pRemove.Nome);
+            }
+
+            
 
             
 
