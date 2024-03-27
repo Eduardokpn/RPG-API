@@ -33,7 +33,7 @@ namespace RpgAPI.Controllers
             List<Personagem> listaBusca = personagens.FindAll(p => p.Nome == nome);
 
             return Ok(listaBusca);
-            
+             
         }
 
         [HttpPost("PostValid")]
@@ -54,7 +54,7 @@ namespace RpgAPI.Controllers
         public IActionResult GetClerigo()
         {
             personagens.RemoveAll(p => p.Classe == ClasseEnum.Cavaleiro);
-            return Ok(personagens.OrderBy(pv => pv.PontosVida));
+            return Ok(personagens.OrderByDescending(pv => pv.PontosVida));
 
         }
 
